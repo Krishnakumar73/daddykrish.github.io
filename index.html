@@ -25,10 +25,12 @@
 <body>
   <h1 id="title">Loading image...</h1>
   <img id="photo" src="" alt="Loading...">
+
   <script>
     fetch('photos.json')
       .then(res => res.json())
       .then(data => {
+        if (!data || !data[0]) throw new Error("No image found");
         const image = data[0];
         const imgUrl = "https://drive.google.com/uc?export=view&id=" + image.id;
         document.getElementById('photo').src = imgUrl;
