@@ -1,23 +1,31 @@
-// Auto-loads image list from public Google Drive folder (via public JSON feed)
-const folderId = "1IA7OubhQzC3q0am9QtfypwfLlnsTjyfD
-"; // Replace this in Step 3.2.2
-const container = document.createElement('div');
-container.style.display = "flex";
-container.style.flexWrap = "wrap";
-container.style.justifyContent = "center";
-document.body.appendChild(container);
+const folderId = "1IA7OubhQzC3q0am9QtfypwfLlnsTjyfD";
+const gallery = document.getElementById("gallery");
 
-fetch(`https://drive.google.com/embeddedfolderview?id=${folderId}#grid`)
-  .then(() => {
-    const iframe = document.createElement('iframe');
-    iframe.src = `https://drive.google.com/embeddedfolderview?id=${folderId}#grid`;
-    iframe.width = "100%";
-    iframe.height = "600";
-    iframe.frameBorder = "0";
-    container.appendChild(iframe);
-  })
-  .catch(err => {
-    console.error("Error loading Drive images", err);
-    container.innerHTML = "Could not load gallery.";
-  });
+async function loadImages() {
+  const url = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=YOUR_API_KEY&fields=files(id,name,mimeType)`;
+  
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (!data.files) {
+      gallery.innerHTML = "<p>Failed to load images.</p>";
+      return;
+    }
+
+    data.files.forEach(file => {
+      if (file.mimeType.startsWith("image/")) {
+        const img = document.createElement("img");
+        img.src = `https://drive.google.com/uc?export=view&id=${file.id}`;
+        img.className = "photo";
+        gallery.appendChild(img);
+      }
+    });
+  } catch (err) {
+    console.error("Error loading images", err);
+    gallery.innerHTML = "<p>Error loading gallery.</p>";
+  }
+}
+
+loadImages();
 
