@@ -1,5 +1,6 @@
 // Auto-loads image list from public Google Drive folder (via public JSON feed)
-const folderId = "PASTE_YOUR_FOLDER_ID_HERE"; // Replace this in Step 3.2.2
+const folderId = "1IA7OubhQzC3q0am9QtfypwfLlnsTjyfD
+"; // Replace this in Step 3.2.2
 const container = document.createElement('div');
 container.style.display = "flex";
 container.style.flexWrap = "wrap";
