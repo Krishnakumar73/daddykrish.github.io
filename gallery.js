@@ -1,39 +1,41 @@
-const folderId = "1IA7OubhQzC3q0am9QtfypwfLlnsTjyfD"; // Krishna's public Drive folder ID
-const apiKey = "AIzaSyCE_XUuNFNaWpMSHAiwbSPYG7CH8Szwm8I"; // Your Google API key
-
-const container = document.createElement("div");
-container.style.display = "flex";
-container.style.flexWrap = "wrap";
-container.style.justifyContent = "center";
-container.style.gap = "10px";
-container.style.padding = "20px";
-document.body.appendChild(container);
-
-async function loadImages() {
-  const url = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${apiKey}&fields=files(id,name,mimeType,thumbnailLink,webContentLink)&pageSize=100`;
-
-  const res = await fetch(url);
-  const data = await res.json();
-
-  if (!data.files || data.files.length === 0) {
-    container.innerHTML = "No images found in the folder.";
-    return;
+<style>
+  body {
+    background-color: #111;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
   }
 
-  data.files.forEach(file => {
-    if (file.mimeType.startsWith("image/")) {
-      const img = document.createElement("img");
-      img.src = file.thumbnailLink || file.webContentLink;
-      img.alt = file.name;
-      img.style.maxWidth = "200px";
-      img.style.borderRadius = "12px";
-      img.style.boxShadow = "0 0 10px rgba(0,0,0,0.2)";
-      container.appendChild(img);
-    }
-  });
-}
+  h1, h2 {
+    margin-top: 20px;
+    color: #00ffff;
+  }
 
-loadImages().catch(err => {
-  console.error("Failed to load images:", err);
-  container.innerHTML = "Could not load gallery.";
-});
+  #gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+  }
+
+  .image-box {
+    margin: 10px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .image-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #00ffff;
+  }
+
+  .image-box img {
+    max-width: 250px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+</style>
