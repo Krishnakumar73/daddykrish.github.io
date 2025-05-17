@@ -34,6 +34,15 @@
   </style>
 </head>
 <body>
+  <script>
+    const password = "KrishnA12345*";
+    const input = prompt("Enter password to access Krishna Gallery:");
+    if (input !== password) {
+      document.body.innerHTML = "<h2 style='color:red;'>Access Denied ❌</h2>";
+      throw new Error("Wrong password");
+    }
+  </script>
+
   <h1>📸 Krishna Gallery</h1>
   <div class="gallery" id="gallery"></div>
 
