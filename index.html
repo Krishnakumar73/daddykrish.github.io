@@ -2,134 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Krishna’s Private Gallery</title>
+  <title>Krishna Gallery</title>
   <style>
     body {
       background-color: #111;
       color: #fff;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       text-align: center;
-      padding: 40px 20px;
+      margin: 0;
+      padding: 20px;
     }
-
     h1 {
-      color: #00ffff;
-      font-size: 2.8em;
+      color: #f39c12;
+      margin-bottom: 20px;
     }
-
-    h2 {
-      color: #00ffff;
-      margin-top: 30px;
-    }
-
-    p {
-      font-size: 1.1em;
-      color: #ccc;
-    }
-
-    #gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 20px;
-      gap: 20px;
-    }
-
-    .photo {
-      background-color: #222;
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
       padding: 10px;
-      border-radius: 10px;
-      transition: transform 0.3s;
-      max-width: 250px;
     }
-
-    .photo img {
-      max-width: 100%;
-      border-radius: 8px;
+    .gallery img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease;
     }
-
-    .photo:hover {
+    .gallery img:hover {
       transform: scale(1.05);
-    }
-
-    footer {
-      margin-top: 60px;
-      font-size: 14px;
-      color: #aaa;
-    }
-
-    input[type="password"] {
-      padding: 10px;
-      font-size: 16px;
-      width: 220px;
-      border-radius: 5px;
-      border: none;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #00ffff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    #lock-screen {
-      padding: 100px 20px;
-    }
-
-    #error {
-      color: red;
-      margin-top: 10px;
     }
   </style>
 </head>
-<body onload="checkAccess()">
+<body>
+  <h1>📸 Krishna Gallery</h1>
+  <div class="gallery" id="gallery"></div>
 
-  <!-- 🔐 LOCK SCREEN -->
-  <div id="lock-screen">
-    <h2>🔒 Enter Passcode to Unlock Krishna's Gallery</h2>
-    <input type="password" id="passcode" placeholder="Enter secret code">
-    <br>
-    <button onclick="verifyPasscode()">Unlock</button>
-    <p id="error"></p>
-  </div>
-
-  <!-- 📸 GALLERY CONTENT -->
-  <div id="gallery-content" style="display:none;">
-    <h1>Krishna’s Photo Gallery 📸</h1>
-    <p>Welcome to the official private photo gallery of Krishna 💎</p>
-
-    <div id="gallery-container">
-      <h2>📸 Krishna’s Latest Uploads</h2>
-      <div id="gallery"></div>
-    </div>
-
-    <footer>© Krishna — All rights reserved</footer>
-  </div>
-
-  <!-- 🔧 JavaScript -->
-  <script src="gallery.js"></script>
   <script>
-    const SECRET = "krishna123"; // 🔑 CHANGE THIS TO YOUR SECRET PASSWORD!
-
-    function checkAccess() {
-      document.getElementById('gallery-content').style.display = "none";
-      document.getElementById('lock-screen').style.display = "block";
-    }
-
-    function verifyPasscode() {
-      const input = document.getElementById("passcode").value;
-      if (input === SECRET) {
-        document.getElementById('lock-screen').style.display = "none";
-        document.getElementById('gallery-content').style.display = "block";
-      } else {
-        document.getElementById("error").innerText = "❌ Incorrect code. Try again.";
-      }
-    }
+    fetch('https://script.google.com/macros/s/AKfycbwFs5fVGCkdNHlfjd6ohOLwXIMofyPNBzHnfrHoL9QJ6AOcLRwZ4NG3yz-XCgB9GRk6/exec')
+      .then(response => response.json())
+      .then(images => {
+        const gallery = document.getElementById('gallery');
+        images.forEach(img => {
+          const image = document.createElement('img');
+          image.src = img.url;
+          image.alt = img.name;
+          gallery.appendChild(image);
+        });
+      })
+      .catch(error => {
+        console.error('Failed to load images:', error);
+        document.getElementById('gallery').innerHTML = '<p style="color: red;">Failed to load gallery.</p>';
+      });
   </script>
 </body>
 </html>
