@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🔥 Krishna Private Gallery 🔥</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      margin-top: 20px;
+      color: #00ffff;
+    }
+    #gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px;
+    }
+    .image-box {
+      margin: 10px;
+      border: 2px solid #333;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .image-box:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #00ffff;
+    }
+    .image-box img {
+      max-width: 250px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔥 Krishna Private Gallery 🔥</h1>
+  <div id="gallery">Loading images...</div>
+
+  <script>
+    const apiURL = "https://script.google.com/macros/s/AKfycbwNVh8GGqqoINBb58IoPoNIgdxopTL6EjGQdEk-lH9sgwQnyYaf6zyRCu0skvX9hkdE/exec";
+
+    fetch(apiURL)
+      .then(response => response.json())
+      .then(data => {
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = '';
+        data.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'image-box';
+          div.innerHTML = `<img src="${item.url}" alt="${item.name}">`;
+          gallery.appendChild(div);
+        });
+      })
+      .catch(error => {
+        document.getElementById('gallery').innerHTML = '⚠️ Failed to load images.';
+        console.error("Error loading gallery:", error);
+      });
+  </script>
+</body>
+</html>
