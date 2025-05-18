@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>🔥 Krishna Private Gallery 🔥</title>
+  <title>Krishna Gallery</title>
   <style>
     body {
       background-color: #111;
@@ -12,16 +11,19 @@
       margin: 0;
       padding: 0;
     }
-    h1 {
+
+    h1, h2 {
       margin-top: 20px;
       color: #00ffff;
     }
+
     #gallery {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       margin: 20px;
     }
+
     .image-box {
       margin: 10px;
       border: 2px solid #333;
@@ -29,10 +31,12 @@
       overflow: hidden;
       transition: transform 0.3s, box-shadow 0.3s;
     }
+
     .image-box:hover {
       transform: scale(1.05);
       box-shadow: 0 0 15px #00ffff;
     }
+
     .image-box img {
       max-width: 250px;
       border-radius: 10px;
@@ -41,9 +45,20 @@
   </style>
 </head>
 <body>
+
+  <!-- 🔐 Password Protection Script -->
+  <script>
+    const password = prompt("Enter the password:");
+    if (password !== "KrishnA12345*") {
+      alert("Incorrect password!");
+      window.location.href = "https://www.google.com";
+    }
+  </script>
+
   <h1>🔥 Krishna Private Gallery 🔥</h1>
   <div id="gallery">Loading images...</div>
 
+  <!-- 📸 Image Loader Script -->
   <script>
     const apiURL = "https://script.google.com/macros/s/AKfycbwNVh8GGqqoINBb58IoPoNIgdxopTL6EjGQdEk-lH9sgwQnyYaf6zyRCu0skvX9hkdE/exec";
 
@@ -64,5 +79,6 @@
         console.error("Error loading gallery:", error);
       });
   </script>
+
 </body>
 </html>
