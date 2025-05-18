@@ -1,67 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Krishna Gallery</title>
-  <style>
-    body {
-      background-color: #111;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      color: #f39c12;
-      margin-bottom: 20px;
-    }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      padding: 10px;
-    }
-    .gallery img {
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-      transition: transform 0.3s ease;
-    }
-    .gallery img:hover {
-      transform: scale(1.05);
-    }
-  </style>
-</head>
-<body>
-  <script>
-    const password = "KrishnA12345*";
-    const input = prompt("Enter password to access Krishna Gallery:");
-    if (input !== password) {
-      document.body.innerHTML = "<h2 style='color:red;'>Access Denied ❌</h2>";
-      throw new Error("Wrong password");
-    }
-  </script>
+<style>
+  body {
+    background-color: #111;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
 
-  <h1>📸 Krishna Gallery</h1>
-  <div class="gallery" id="gallery"></div>
+  h1, h2 {
+    margin-top: 20px;
+    color: #00ffff;
+  }
 
-  <script>
-    fetch('https://script.google.com/macros/s/AKfycbwFs5fVGCkdNHlfjd6ohOLwXIMofyPNBzHnfrHoL9QJ6AOcLRwZ4NG3yz-XCgB9GRk6/exec')
-      .then(response => response.json())
-      .then(images => {
-        const gallery = document.getElementById('gallery');
-        images.forEach(img => {
-          const image = document.createElement('img');
-          image.src = img.url;
-          image.alt = img.name;
-          gallery.appendChild(image);
-        });
-      })
-      .catch(error => {
-        console.error('Failed to load images:', error);
-        document.getElementById('gallery').innerHTML = '<p style="color: red;">Failed to load gallery.</p>';
+  #gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+  }
+
+  .image-box {
+    margin: 10px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .image-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #00ffff;
+  }
+
+  .image-box img {
+    max-width: 250px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+</style>
+
+<h1>Krishna Gallery 💙</h1>
+<div id="gallery"></div>
+
+<script>
+  const galleryEl = document.getElementById('gallery');
+
+  fetch('https://script.google.com/macros/s/AKfycbwNVh8GGqqoINBb58IoPoNIgdxopTL6EjGQdEk-lH9sgwQnyYaf6zyRCu0skvX9hkdE/exec?key=KrishnaToken987')
+    .then(response => response.json())
+    .then(images => {
+      images.forEach(img => {
+        const box = document.createElement('div');
+        box.className = 'image-box';
+
+        const image = document.createElement('img');
+        image.src = img.url;
+        image.alt = img.name;
+
+        box.appendChild(image);
+        galleryEl.appendChild(box);
       });
-  </script>
-</body>
-</html>
+    })
+    .catch(err => {
+      galleryEl.innerHTML = '<p style="color:red;">Failed to load images.</p>';
+      console.error('Error loading images:', err);
+    });
+</script>
